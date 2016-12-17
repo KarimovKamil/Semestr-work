@@ -49,4 +49,10 @@ public class GoodsController {
         goodsService.deleteGoods(id);
         return new ModelAndView("redirect:/goods/all");
     }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView addGoods() {
+        return new ModelAndView("addGoods");
+    }
 }

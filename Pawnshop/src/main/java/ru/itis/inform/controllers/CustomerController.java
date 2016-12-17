@@ -1,11 +1,14 @@
 package ru.itis.inform.controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.inform.models.Customer;
 import ru.itis.inform.services.interfaces.CustomerService;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,20 +33,6 @@ public class CustomerController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    @ResponseBody
-    public ModelAndView addCustomerGet() {
-        ModelAndView modelAndView = new ModelAndView("addCustomer");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView addCustomerPost() {
-        ModelAndView modelAndView = new ModelAndView("addCustomer");
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getCustomer(@PathVariable("id") int id) {
@@ -61,8 +50,56 @@ public class CustomerController {
         return new ModelAndView("redirect:/customer/all");
     }
 
-//    @RequestMapping(value = "/*/delete", method = RequestMethod.GET)
-//    @ResponseBody
-//    public ModelAndView deleteCustomerGet() {
-//    }
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView addGoods() {
+        return new ModelAndView("addCustomer");
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ModelAndView addGoods(@RequestParam("lastName") String lastName,
+                                 @RequestParam("firstName") String firstName,
+                                 @RequestParam("middleName") String middleName,
+                                 @RequestParam("passport") String passport,
+                                 @RequestParam("phoneNumber") String phone,
+                                 @RequestParam("dateOfBirth") Date dateOfBirth) {
+        customerService.saveCustomer(new Customer.Builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .phoneNumber(phone)
+                .passport(passport)
+                .dateOfBirth(dateOfBirth)
+                .build());
+        return new ModelAndView("redirect:/customer/all");
+    }
+
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView updateGoods(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("updateCustomer");
+        Map<String, Customer> params = new HashMap<>();
+        params.put("customer", customerService.getCustomer(id));
+        modelAndView.addAllObjects(params);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    public ModelAndView updateGoods(@PathVariable("id") int id,
+                                    @RequestParam("lastName") String lastName,
+                                    @RequestParam("firstName") String firstName,
+                                    @RequestParam("middleName") String middleName,
+                                    @RequestParam("passport") String passport,
+                                    @RequestParam("phoneNumber") String phone,
+                                    @RequestParam("dateOfBirth") Date dateOfBirth) {
+        customerService.updateCustomer(id, new Customer.Builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .phoneNumber(phone)
+                .passport(passport)
+                .dateOfBirth(dateOfBirth)
+                .build());
+        return new ModelAndView("redirect:/customer/all");
+    }
 }

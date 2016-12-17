@@ -4,6 +4,7 @@ public class Goods {
     private int goodsId;
     private String goodsType;
     private int goodsPrice;
+    private String description;
 
     public Goods() {
     }
@@ -12,6 +13,7 @@ public class Goods {
         this.goodsId = builder.goodsId;
         this.goodsType = builder.goodsType;
         this.goodsPrice = builder.goodsPrice;
+        this.description = builder.description;
     }
 
     public int getGoodsId() {
@@ -26,10 +28,15 @@ public class Goods {
         return goodsPrice;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public static class Builder {
         private int goodsId;
         private String goodsType;
         private int goodsPrice;
+        private String description;
 
         public Builder goodsId(int arg) {
             goodsId = arg;
@@ -43,6 +50,11 @@ public class Goods {
 
         public Builder goodsPrice(int arg) {
             goodsPrice = arg;
+            return this;
+        }
+
+        public Builder description(String arg) {
+            description = arg;
             return this;
         }
 

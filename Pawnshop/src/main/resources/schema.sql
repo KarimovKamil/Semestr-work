@@ -6,14 +6,13 @@ DROP TABLE IF EXISTS the_property CASCADE;
 CREATE TABLE customer
 (
   customer_id SERIAL,
-  passport VARCHAR(20) NOT NULL,
+  passport VARCHAR(20) NOT NULL UNIQUE,
   last_name VARCHAR(40),
   first_name VARCHAR(40),
   middle_name VARCHAR(40),
   date_of_birth DATE,
-  phone_number VARCHAR(22) NOT NULL,
+  phone_number VARCHAR(22) NOT NULL UNIQUE,
   CONSTRAINT customer_pkey PRIMARY KEY (customer_id),
-  CONSTRAINT passport_unique UNIQUE (passport),
   CONSTRAINT pass_check CHECK (passport::text ~ '[0-9]{10}'::text),
   CONSTRAINT phone_check CHECK (phone_number::text ~ '[0-9]{11}'::text)
 );
@@ -22,6 +21,7 @@ CREATE TABLE goods
 (
   goods_id SERIAL,
   goods_type VARCHAR(50),
+  description VARCHAR(100),
   pawnshop_price INT NOT NULL,
   CONSTRAINT goods_pkey PRIMARY KEY (goods_id)
 );
@@ -67,3 +67,5 @@ END;
 CREATE TRIGGER tr_operation_after_insert
 AFTER INSERT ON operation FOR EACH ROW
 EXECUTE PROCEDURE trigger_s_after_insert();
+
+CREATE

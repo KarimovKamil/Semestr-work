@@ -57,29 +57,17 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(int customerId, Customer customer) {
         verificationFactory.verifyCustomerExistence(customerId);
         Customer customerFromDB = customerDao.getCustomer(customerId);
-        if (customer.getDateOfBirth() != null) {
-            customerFromDB.setDateOfBirth(customer.getDateOfBirth());
-        }
-        if (customer.getFirstName() != null && !customer.getFirstName().equals("")) {
-            customerFromDB.setFirstName(customer.getFirstName());
-        }
-        if (customer.getLastName() != null && !customer.getLastName().equals("")) {
-            customerFromDB.setLastName(customer.getLastName());
-        }
-        if (customer.getMiddleName() != null && !customer.getMiddleName().equals("")) {
-            customerFromDB.setMiddleName(customer.getMiddleName());
-        }
-        if (customer.getPassport() != null && !customer.getPassport().equals("")) {
+        if (customer.getPassport() != null && !customer.getPassport().equals("")
+                && !customer.getPassport().equals(customerFromDB.getPassport())) {
             verificationFactory.verifyPassport(customer.getPassport());
             verificationFactory.verifyPassportUnique(customer.getPassport());
-            customerFromDB.setPassport(customer.getPassport());
         }
-        if (customer.getPhoneNumber() != null && !customer.getPhoneNumber().equals("")) {
+        if (customer.getPhoneNumber() != null && !customer.getPhoneNumber().equals("")
+                && !customer.getPhoneNumber().equals(customerFromDB.getPhoneNumber())) {
             verificationFactory.verifyPhone(customer.getPhoneNumber());
             verificationFactory.verifyPhoneUnique(customer.getPhoneNumber());
-            customerFromDB.setPhoneNumber(customer.getPhoneNumber());
         }
 
-        customerDao.updateCustomer(customerId, customerFromDB);
+        customerDao.updateCustomer(customerId, customer);
     }
 }

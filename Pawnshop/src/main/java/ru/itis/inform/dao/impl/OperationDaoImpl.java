@@ -1,10 +1,10 @@
 package ru.itis.inform.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.itis.inform.dao.interfaces.OperationDao;
-import ru.itis.inform.dao.config.DaoConfig;
 import ru.itis.inform.models.Operation;
 
 import java.util.HashMap;
@@ -13,6 +13,10 @@ import java.util.Map;
 
 @Repository
 public class OperationDaoImpl implements OperationDao {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String CREATE_OPERATION_SQL =
             "INSERT INTO operation (goods_id, customer_id, pledge_date, time_of_return, " +
                     "status, return_amount) VALUES (:goodsId, :customerId, :pledgeDate, " +
@@ -23,8 +27,6 @@ public class OperationDaoImpl implements OperationDao {
             "SELECT * FROM operation WHERE operation_id = :operationId;";
     private static final String GET_ALL_OPERATIONS_SQL =
             "SELECT * FROM operation;";
-
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new DaoConfig().namedParameterJdbcTemplate();
 
     private RowMapper<Operation> operationMapper() {
         return (resultSet, i) -> {

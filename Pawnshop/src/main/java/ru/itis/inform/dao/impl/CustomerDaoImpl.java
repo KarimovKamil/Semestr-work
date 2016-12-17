@@ -1,10 +1,10 @@
 package ru.itis.inform.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.itis.inform.dao.interfaces.CustomerDao;
-import ru.itis.inform.dao.config.DaoConfig;
 import ru.itis.inform.models.Customer;
 
 import java.util.HashMap;
@@ -13,6 +13,10 @@ import java.util.Map;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String CREATE_CUSTOMER_SQL =
             "INSERT INTO customer (passport, last_name, first_name, " +
                     "middle_name, date_of_birth, phone_number) VALUES (:passport, " +
@@ -23,13 +27,11 @@ public class CustomerDaoImpl implements CustomerDao {
     private static final String GET_CUSTOMER_BY_ID_SQL =
             "SELECT * FROM customer WHERE customer_id = :customerId;";
     private static final String GET_ALL_CUSTOMERS_SQL =
-            "SELECT * FROM customer;";
+            "SELECT * FROM customer ORDER BY(customer_id);";
     private static final String UPDATE_CUSTOMER_SQL =
             "UPDATE customer SET (passport, last_name, first_name, middle_name, date_of_birth, phone_number) " +
-                    "= (:passport, :lastName, :firtName, :middleName, :dateOfBirth, :phoneNumber) " +
-                    "WHERE customer.id = customerId";
-
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new DaoConfig().namedParameterJdbcTemplate();
+                    "= (:passport, :lastName, :firstName, :middleName, :dateOfBirth, :phoneNumber) " +
+                    "WHERE customer_id = :customerId";
 
     private RowMapper<Customer> customerMapper() {
         return (resultSet, i) -> {

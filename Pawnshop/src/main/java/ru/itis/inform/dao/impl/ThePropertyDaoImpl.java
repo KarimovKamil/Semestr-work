@@ -1,10 +1,10 @@
 package ru.itis.inform.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.itis.inform.dao.interfaces.ThePropertyDao;
-import ru.itis.inform.dao.config.DaoConfig;
 import ru.itis.inform.models.TheProperty;
 
 import java.util.HashMap;
@@ -13,6 +13,10 @@ import java.util.Map;
 
 @Repository
 public class ThePropertyDaoImpl implements ThePropertyDao {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String CREATE_THE_PROPERTY_SQL =
             "INSERT INTO the_property (goods_id, address, dwelling_space) " +
                     "VALUES (:goodsId, :address, :dwellingSpace) RETURNING the_property_id;";
@@ -23,8 +27,6 @@ public class ThePropertyDaoImpl implements ThePropertyDao {
                     "WHERE the_property_id = :thePropertyId;";
     private static final String GET_ALL_PROPERTYS_SQL =
             "SELECT * FROM the_property INNER JOIN goods ON goods.goods_id = the_property.goods_id;";
-
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new DaoConfig().namedParameterJdbcTemplate();
 
     private RowMapper<TheProperty> thePropertyMapper() {
         return (resultSet, i) -> {

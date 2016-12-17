@@ -1,10 +1,10 @@
 package ru.itis.inform.dao.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.itis.inform.dao.interfaces.GoodsDao;
-import ru.itis.inform.dao.config.DaoConfig;
 import ru.itis.inform.models.Goods;
 
 import java.util.HashMap;
@@ -13,8 +13,13 @@ import java.util.Map;
 
 @Repository
 public class GoodsDaoImpl implements GoodsDao {
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String CREATE_GOODS_SQL =
-            "INSERT INTO goods (goods_type, pawnshop_price) VALUES (:goodsType, :pawnshopPrice) " +
+            "INSERT INTO goods (goods_type, pawnshop_price, description) " +
+                    "VALUES (:goodsType, :pawnshopPrice, :description) " +
                     "RETURNING goods_id;";
     private static final String DELETE_GOODS_SQL =
             "DELETE FROM goods WHERE goods_id = :goodsId;";
@@ -23,14 +28,13 @@ public class GoodsDaoImpl implements GoodsDao {
     private static final String GET_ALL_GOODS_SQL =
             "SELECT * FROM goods;";
 
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate = new DaoConfig().namedParameterJdbcTemplate();
-
     private RowMapper<Goods> goodsMapper() {
         return (resultSet, i) -> {
             Goods goods = new Goods.Builder()
                     .goodsId(resultSet.getInt("goods_id"))
                     .goodsType(resultSet.getString("goods_type"))
                     .goodsPrice(resultSet.getInt("pawnshop_price"))
+                    .description(resultSet.getString("description"))
                     .build();
 
             return goods;
@@ -41,6 +45,7 @@ public class GoodsDaoImpl implements GoodsDao {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("goodsType", goods.getGoodsType());
         params.put("pawnshopPrice", goods.getGoodsPrice());
+        params.put("description", goods.getDescription());
 
         return namedParameterJdbcTemplate.queryForObject(CREATE_GOODS_SQL, params, int.class);
     }
