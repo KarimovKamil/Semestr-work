@@ -37,11 +37,11 @@ CREATE TABLE operation
   return_amount INT NOT NULL,
   CONSTRAINT operation_pkey PRIMARY KEY (operation_id),
   CONSTRAINT operation_customer_id_fkey FOREIGN KEY (customer_id)
-  REFERENCES customer (customer_id),
+  REFERENCES customer (customer_id) ON DELETE SET NULL,
   CONSTRAINT operation_goods_id_fkey FOREIGN KEY (goods_id)
-  REFERENCES goods (goods_id),
+  REFERENCES goods (goods_id) ON DELETE CASCADE,
   CONSTRAINT time_check CHECK (time_of_return > 0),
-  CONSTRAINT pledge_date_check CHECK (pledge_date + time_of_return * interval '1 day' < now())
+  CONSTRAINT pledge_date_check CHECK (pledge_date + time_of_return * interval '1 day' > now())
 );
 
 CREATE TABLE the_property
@@ -52,8 +52,9 @@ CREATE TABLE the_property
   dwelling_space INT NOT NULL,
   CONSTRAINT the_property_pkey PRIMARY KEY (the_property_id),
   CONSTRAINT the_property_good_id_fkey FOREIGN KEY (goods_id)
-  REFERENCES goods (goods_id)
+  REFERENCES goods (goods_id) ON DELETE CASCADE
 );
+
 
 CREATE FUNCTION trigger_s_after_insert () RETURNS trigger AS '
 BEGIN
@@ -68,4 +69,40 @@ CREATE TRIGGER tr_operation_after_insert
 AFTER INSERT ON operation FOR EACH ROW
 EXECUTE PROCEDURE trigger_s_after_insert();
 
-CREATE
+
+CREATE INDEX customer_index ON customer (customer_id);
+CREATE INDEX goods_index ON goods (goods_id);
+CREATE INDEX operation_index ON operation (operation_id);
+
+
+CREATE OR REPLACE FUNCTION add_operation
+(cid INT, gtype VARCHAR(50), gdesc VARCHAR(100), gprice INT, treturn INT)
+RETURNS void AS '
+  BEGIN
+  INSERT INTO goods (goods_type, pawnshop_price, description)
+                    VALUES (gtype, gprice, gdesc)
+                    RETURNING goods_id INTO gid;
+  INSERT INTO operation (goods_id, customer_id, pledge_date, time_of_return,
+                    return_amount) VALUES ( gid, cid, now(), treturn,
+                    gprice*1.1);
+
+  END;
+'
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION add_property
+  (gid INT, address VARCHAR(70), space INT)
+  RETURNS VOID AS '
+  BEGIN
+  IF (SELECT count(*) FROM goods WHERE (goods_id = gid) AND (goods_type = ''THE PROPERTY'')) > 0
+  THEN
+  INSERT INTO the_property (goods_id, address, dwelling_space) VALUES (gid, address, space);
+  END IF;
+  END;
+'
+LANGUAGE plpgsql;
+
+
+CREATE VIEW property_view AS (SELECT p.address, p.dwelling_space, p.the_property_id, g.* FROM the_property AS p
+INNER JOIN goods AS g ON g.goods_id = p.goods_id);

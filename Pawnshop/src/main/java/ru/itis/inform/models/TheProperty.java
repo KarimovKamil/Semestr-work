@@ -1,6 +1,7 @@
 package ru.itis.inform.models;
 
 public class TheProperty extends Goods {
+    private int propertyId;
     private String address;
     private int dwellingSpace;
 
@@ -15,6 +16,7 @@ public class TheProperty extends Goods {
         super(builder);
         this.address = builder.address;
         this.dwellingSpace = builder.dwellingSpace;
+        this.propertyId = builder.propertyId;
     }
 
     public String getAddress() {
@@ -25,9 +27,19 @@ public class TheProperty extends Goods {
         return dwellingSpace;
     }
 
+    public int getPropertyId() {
+        return propertyId;
+    }
+
     public static class Builder extends Goods.Builder {
+        private int propertyId;
         private String address;
         private int dwellingSpace;
+
+        public Builder propertyId(int arg) {
+            propertyId = arg;
+            return this;
+        }
 
         public Builder address(String arg) {
             address = arg;

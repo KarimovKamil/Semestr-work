@@ -14,8 +14,6 @@ public interface CustomerDao {
 
     List<Customer> getAll();
 
-    int getCustomerDebts(int customerId);
-
     void updateCustomer(int customerId, Customer customer);
 
 }

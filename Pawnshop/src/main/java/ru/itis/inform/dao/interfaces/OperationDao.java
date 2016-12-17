@@ -1,12 +1,13 @@
 package ru.itis.inform.dao.interfaces;
 
+import ru.itis.inform.models.NewOperation;
 import ru.itis.inform.models.Operation;
 
 import java.util.List;
 
 public interface OperationDao {
 
-    int saveOperation(Operation operation);
+    void saveOperation(NewOperation newOperation);
 
     void deleteOperation(int operationId);
 
@@ -14,6 +15,6 @@ public interface OperationDao {
 
     List<Operation> getAll();
 
-    //void updateOperation(int operationId, Operation operation);
+    void updateOperation(int operationId, Operation operation);
 
 }

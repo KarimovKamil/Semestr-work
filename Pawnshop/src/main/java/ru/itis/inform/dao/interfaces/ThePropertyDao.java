@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ThePropertyDao {
 
-    int saveTheProperty(TheProperty theProperty);
+    void saveTheProperty(TheProperty theProperty);
 
     void deleteTheProperty(int thePropertyId);
 
@@ -14,6 +14,6 @@ public interface ThePropertyDao {
 
     List<TheProperty> getAll();
 
-    //void updateTheProperty(int thePropertyId, TheProperty theProperty);
+    void updateTheProperty(int thePropertyId, TheProperty theProperty);
 
 }

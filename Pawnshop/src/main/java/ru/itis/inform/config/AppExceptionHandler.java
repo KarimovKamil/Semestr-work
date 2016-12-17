@@ -6,6 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.itis.inform.controllers.CustomerController;
 import ru.itis.inform.controllers.GoodsController;
+import ru.itis.inform.controllers.OperationController;
+import ru.itis.inform.controllers.ThePropertyController;
 import ru.itis.inform.exceptions.IncorrectDataException;
 
 import java.util.HashMap;
@@ -16,7 +18,9 @@ import java.util.Map;
  */
 @ControllerAdvice(assignableTypes = {
         CustomerController.class,
-        GoodsController.class
+        GoodsController.class,
+        OperationController.class,
+        ThePropertyController.class
 })
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 

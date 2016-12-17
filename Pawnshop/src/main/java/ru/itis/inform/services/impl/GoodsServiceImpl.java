@@ -20,27 +20,35 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     VerificationFactory verificationFactory;
 
+    @Override
     public void saveGoods(Goods goods) {
         verificationFactory.verifyGoods(goods);
+        goods.setGoodsType(goods.getGoodsType().toUpperCase());
         goodsDao.saveGoods(goods);
     }
 
+    @Override
     public void deleteGoods(int goodsId) {
         verificationFactory.verifyGoodsExistence(goodsId);
         goodsDao.deleteGoods(goodsId);
     }
 
+    @Override
     public Goods getGoods(int goodsId) {
         verificationFactory.verifyGoodsExistence(goodsId);
         Goods goods = goodsDao.getGoods(goodsId);
         return goods;
     }
 
+    @Override
     public List<Goods> getAll() {
         return goodsDao.getAll();
     }
 
+    @Override
     public void updateGoods(int goodsId, Goods goods) {
-
+        verificationFactory.verifyGoodsExistence(goodsId);
+        verificationFactory.verifyGoods(goods);
+        goodsDao.updateGoods(goodsId, goods);
     }
 }

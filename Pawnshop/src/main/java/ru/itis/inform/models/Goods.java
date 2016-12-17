@@ -32,6 +32,14 @@ public class Goods {
         return description;
     }
 
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
+
     public static class Builder {
         private int goodsId;
         private String goodsType;

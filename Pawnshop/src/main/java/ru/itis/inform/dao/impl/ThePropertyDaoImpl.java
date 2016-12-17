@@ -18,39 +18,46 @@ public class ThePropertyDaoImpl implements ThePropertyDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String CREATE_THE_PROPERTY_SQL =
-            "INSERT INTO the_property (goods_id, address, dwelling_space) " +
-                    "VALUES (:goodsId, :address, :dwellingSpace) RETURNING the_property_id;";
+            "SELECT add_property(:goodsId, :address, :dwellingSpace);";
     private static final String DELETE_THE_PROPERTY_SQL =
             "DELETE FROM the_property WHERE the_property_id = :thePropertyId;";
     private static final String GET_THE_PROPERTY_BY_ID_SQL =
-            "SELECT * FROM the_property INNER JOIN goods ON goods.goods_id = the_property.goods_id " +
+            "SELECT * FROM property_view " +
                     "WHERE the_property_id = :thePropertyId;";
     private static final String GET_ALL_PROPERTYS_SQL =
-            "SELECT * FROM the_property INNER JOIN goods ON goods.goods_id = the_property.goods_id;";
+            "SELECT * FROM property_view ORDER BY(the_property_id);";
+    private static final String UPDATE_THE_PROPERTY_SQL =
+            "UPDATE the_property SET (address, dwelling_space) = " +
+                    "(:address, :dwellingSpace)" +
+                    "WHERE the_property_id = :propertyId;";
 
     private RowMapper<TheProperty> thePropertyMapper() {
         return (resultSet, i) -> {
             TheProperty theProperty = (TheProperty) new TheProperty.Builder()
+                    .propertyId(resultSet.getInt("the_property_id"))
                     .dwellingSpace(resultSet.getInt("dwelling_space"))
                     .address(resultSet.getString("address"))
                     .goodsId(resultSet.getInt("goods_id"))
                     .goodsPrice(resultSet.getInt("pawnshop_price"))
                     .goodsType(resultSet.getString("goods_type"))
+                    .description(resultSet.getString("description"))
                     .build();
 
             return theProperty;
         };
     }
 
-    public int saveTheProperty(TheProperty theProperty) {
+    @Override
+    public void saveTheProperty(TheProperty theProperty) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("goodsId", theProperty.getGoodsId());
         params.put("address", theProperty.getAddress());
         params.put("dwellingSpace", theProperty.getDwellingSpace());
 
-        return namedParameterJdbcTemplate.queryForObject(CREATE_THE_PROPERTY_SQL, params, int.class);
+        namedParameterJdbcTemplate.queryForObject(CREATE_THE_PROPERTY_SQL, params, String.class);
     }
 
+    @Override
     public void deleteTheProperty(int thePropertyId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("thePropertyId", thePropertyId);
@@ -58,6 +65,7 @@ public class ThePropertyDaoImpl implements ThePropertyDao {
         namedParameterJdbcTemplate.update(DELETE_THE_PROPERTY_SQL, params);
     }
 
+    @Override
     public TheProperty getTheProperty(int thePropertyId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("thePropertyId", thePropertyId);
@@ -65,7 +73,18 @@ public class ThePropertyDaoImpl implements ThePropertyDao {
         return namedParameterJdbcTemplate.queryForObject(GET_THE_PROPERTY_BY_ID_SQL, params, thePropertyMapper());
     }
 
+    @Override
     public List<TheProperty> getAll() {
         return namedParameterJdbcTemplate.query(GET_ALL_PROPERTYS_SQL, thePropertyMapper());
+    }
+
+    @Override
+    public void updateTheProperty(int thePropertyId, TheProperty theProperty) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("propertyId", thePropertyId);
+        params.put("address", theProperty.getAddress());
+        params.put("dwellingSpace", theProperty.getDwellingSpace());
+
+        namedParameterJdbcTemplate.update(UPDATE_THE_PROPERTY_SQL, params);
     }
 }

@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.itis.inform.exceptions.IncorrectDataException;
 import ru.itis.inform.models.Goods;
+import ru.itis.inform.models.NewOperation;
+import ru.itis.inform.models.Operation;
+import ru.itis.inform.models.TheProperty;
 import ru.itis.inform.validation.dao.CustomerValidator;
 import ru.itis.inform.validation.dao.GoodsValidator;
 import ru.itis.inform.validation.dao.OperationValidator;
@@ -83,4 +86,53 @@ public class VerificationFactory {
             throw new IncorrectDataException("Incorrect goods type");
         }
     }
+
+    public void verifyOperation(Operation operation) {
+        if (operation.getTimeOfReturn() <= 0) {
+            throw new IncorrectDataException("Incorrect time of return");
+        }
+
+        if (operation.getReturnAmount() <= 0) {
+            throw new IncorrectDataException("Incorrect return amount");
+        }
+
+        String status = operation.getStatus().toUpperCase();
+        if (!"REPAID".equals(status) && !"OVERDUE".equals(status)
+                && !"DEPT".equals(status)) {
+            throw new IncorrectDataException("Incorrect status");
+        }
+    }
+
+    public void verifyNewOperation(NewOperation operation) {
+        if (operation.getGoodsType() == null || operation.getGoodsType().equals("")) {
+            throw new IncorrectDataException("Incorrect goods type");
+        }
+
+        if (operation.getTimeOfReturn() <= 0) {
+            throw new IncorrectDataException("Incorrect time of return");
+        }
+
+        if (operation.getPrice() <= 0) {
+            throw new IncorrectDataException("Incorrect price");
+        }
+    }
+
+    public void verifyGoodsIsProperty(int goodsId) {
+        if (!goodsValidator.verifyGoodsIsProperty(goodsId)) {
+            throw new IncorrectDataException("Incorrect goods id");
+        }
+    }
+
+    public void verifyTheProperty(TheProperty theProperty) {
+        if (theProperty.getDwellingSpace() <= 0) {
+            throw new IncorrectDataException("Incorrect dwelling space");
+        }
+    }
+
+    public void verifyThePropertyWithThisGoods(int goodsId) {
+        if (thePropertyValidator.verifyThePropertyWithThisGoods(goodsId)) {
+            throw new IncorrectDataException("The property is already exists");
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.inform.dao.interfaces.CustomerDao;
 import ru.itis.inform.models.Customer;
-import ru.itis.inform.models.Goods;
 import ru.itis.inform.services.interfaces.CustomerService;
 import ru.itis.inform.validation.VerificationFactory;
 
@@ -18,6 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerDao customerDao;
 
+    @Override
     public void saveCustomer(Customer customer) {
         verificationFactory.verifyPhone(customer.getPhoneNumber());
         verificationFactory.verifyPassport(customer.getPassport());
@@ -27,11 +27,13 @@ public class CustomerServiceImpl implements CustomerService {
         customerDao.saveCustomer(customer);
     }
 
+    @Override
     public void deleteCustomer(int customerId) {
         verificationFactory.verifyCustomerExistence(customerId);
         customerDao.deleteCustomer(customerId);
     }
 
+    @Override
     public Customer getCustomer(int customerId) {
         verificationFactory.verifyCustomerExistence(customerId);
         Customer customer = customerDao.getCustomer(customerId);
@@ -39,21 +41,14 @@ public class CustomerServiceImpl implements CustomerService {
         return customer;
     }
 
+    @Override
     public List<Customer> getAll() {
         List<Customer> customers = customerDao.getAll();
 
         return customers;
     }
 
-    public List<Goods> getCustomerGoods(int customerId) {
-        verificationFactory.verifyCustomerExistence(customerId);
-        return null;
-    }
-
-    public int getCustomerDebts(int customerId) {
-        return 0;
-    }
-
+    @Override
     public void updateCustomer(int customerId, Customer customer) {
         verificationFactory.verifyCustomerExistence(customerId);
         Customer customerFromDB = customerDao.getCustomer(customerId);

@@ -1,8 +1,6 @@
 package ru.itis.inform.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.inform.models.Customer;
@@ -26,7 +24,7 @@ public class CustomerController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getAllCustomers() {
-        ModelAndView modelAndView = new ModelAndView("customers");
+        ModelAndView modelAndView = new ModelAndView("customer/customers");
         Map<String, List<Customer>> params = new HashMap<>();
         params.put("customers", customerService.getAll());
         modelAndView.addAllObjects(params);
@@ -36,7 +34,7 @@ public class CustomerController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView getCustomer(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("customer");
+        ModelAndView modelAndView = new ModelAndView("customer/customer");
         Map<String, Customer> params = new HashMap<>();
         params.put("customer", customerService.getCustomer(id));
         modelAndView.addAllObjects(params);
@@ -52,17 +50,17 @@ public class CustomerController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView addGoods() {
-        return new ModelAndView("addCustomer");
+    public ModelAndView addCustomer() {
+        return new ModelAndView("customer/addCustomer");
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addGoods(@RequestParam("lastName") String lastName,
-                                 @RequestParam("firstName") String firstName,
-                                 @RequestParam("middleName") String middleName,
-                                 @RequestParam("passport") String passport,
-                                 @RequestParam("phoneNumber") String phone,
-                                 @RequestParam("dateOfBirth") Date dateOfBirth) {
+    public ModelAndView addCustomer(@RequestParam("lastName") String lastName,
+                                    @RequestParam("firstName") String firstName,
+                                    @RequestParam("middleName") String middleName,
+                                    @RequestParam("passport") String passport,
+                                    @RequestParam("phoneNumber") String phone,
+                                    @RequestParam("dateOfBirth") Date dateOfBirth) {
         customerService.saveCustomer(new Customer.Builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -76,8 +74,8 @@ public class CustomerController {
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView updateGoods(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("updateCustomer");
+    public ModelAndView updateCustomer(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("customer/updateCustomer");
         Map<String, Customer> params = new HashMap<>();
         params.put("customer", customerService.getCustomer(id));
         modelAndView.addAllObjects(params);
@@ -85,13 +83,13 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-    public ModelAndView updateGoods(@PathVariable("id") int id,
-                                    @RequestParam("lastName") String lastName,
-                                    @RequestParam("firstName") String firstName,
-                                    @RequestParam("middleName") String middleName,
-                                    @RequestParam("passport") String passport,
-                                    @RequestParam("phoneNumber") String phone,
-                                    @RequestParam("dateOfBirth") Date dateOfBirth) {
+    public ModelAndView updateCustomer(@PathVariable("id") int id,
+                                       @RequestParam("lastName") String lastName,
+                                       @RequestParam("firstName") String firstName,
+                                       @RequestParam("middleName") String middleName,
+                                       @RequestParam("passport") String passport,
+                                       @RequestParam("phoneNumber") String phone,
+                                       @RequestParam("dateOfBirth") Date dateOfBirth) {
         customerService.updateCustomer(id, new Customer.Builder()
                 .firstName(firstName)
                 .lastName(lastName)

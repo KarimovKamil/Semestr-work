@@ -49,6 +49,7 @@ public class CustomerDaoImpl implements CustomerDao {
         };
     }
 
+    @Override
     public int saveCustomer(Customer customer) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("passport", customer.getPassport());
@@ -61,6 +62,7 @@ public class CustomerDaoImpl implements CustomerDao {
         return namedParameterJdbcTemplate.queryForObject(CREATE_CUSTOMER_SQL, params, int.class);
     }
 
+    @Override
     public void deleteCustomer(int customerId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("customerId", customerId);
@@ -68,6 +70,7 @@ public class CustomerDaoImpl implements CustomerDao {
         namedParameterJdbcTemplate.update(DELETE_CUSTOMER_SQL, params);
     }
 
+    @Override
     public Customer getCustomer(int customerId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("customerId", customerId);
@@ -75,12 +78,9 @@ public class CustomerDaoImpl implements CustomerDao {
         return namedParameterJdbcTemplate.queryForObject(GET_CUSTOMER_BY_ID_SQL, params, customerMapper());
     }
 
+    @Override
     public List<Customer> getAll() {
         return namedParameterJdbcTemplate.query(GET_ALL_CUSTOMERS_SQL, customerMapper());
-    }
-
-    public int getCustomerDebts(int customerId) {
-        return 0;
     }
 
     @Override

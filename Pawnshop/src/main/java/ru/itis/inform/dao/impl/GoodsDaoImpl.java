@@ -26,7 +26,11 @@ public class GoodsDaoImpl implements GoodsDao {
     private static final String GET_GOODS_BY_ID_SQL =
             "SELECT * FROM goods WHERE goods_id = :goodsId;";
     private static final String GET_ALL_GOODS_SQL =
-            "SELECT * FROM goods;";
+            "SELECT * FROM goods ORDER BY(goods_id);";
+    private static final String UPDATE_GOODS_SQL =
+            "UPDATE goods SET (goods_type, pawnshop_price, description) = " +
+                    "(:goodsType, :pawnshopPrice, :description) " +
+                    "WHERE goods_id = :goodsId;";
 
     private RowMapper<Goods> goodsMapper() {
         return (resultSet, i) -> {
@@ -41,6 +45,7 @@ public class GoodsDaoImpl implements GoodsDao {
         };
     }
 
+    @Override
     public int saveGoods(Goods goods) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("goodsType", goods.getGoodsType());
@@ -50,23 +55,33 @@ public class GoodsDaoImpl implements GoodsDao {
         return namedParameterJdbcTemplate.queryForObject(CREATE_GOODS_SQL, params, int.class);
     }
 
+    @Override
     public void deleteGoods(int goodsId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("goodsId", goodsId);
         namedParameterJdbcTemplate.update(DELETE_GOODS_SQL, params);
     }
 
+    @Override
     public Goods getGoods(int goodsId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("goodsId", goodsId);
         return namedParameterJdbcTemplate.queryForObject(GET_GOODS_BY_ID_SQL, params, goodsMapper());
     }
 
+    @Override
     public List<Goods> getAll() {
         return namedParameterJdbcTemplate.query(GET_ALL_GOODS_SQL, goodsMapper());
     }
 
+    @Override
     public void updateGoods(int goodsId, Goods goods) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("goodsType", goods.getGoodsType());
+        params.put("pawnshopPrice", goods.getGoodsPrice());
+        params.put("description", goods.getDescription());
+        params.put("goodsId", goodsId);
 
+        namedParameterJdbcTemplate.update(UPDATE_GOODS_SQL, params);
     }
 }

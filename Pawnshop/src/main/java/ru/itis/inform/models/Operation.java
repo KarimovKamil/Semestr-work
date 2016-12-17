@@ -52,6 +52,10 @@ public class Operation {
         return returnAmount;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public static class Builder {
         private int operationId;
         private int goodsId;

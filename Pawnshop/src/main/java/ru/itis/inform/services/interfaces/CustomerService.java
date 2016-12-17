@@ -15,10 +15,6 @@ public interface CustomerService {
 
     List<Customer> getAll();
 
-    List<Goods> getCustomerGoods(int customerId);
-
-    int getCustomerDebts(int customerId);
-
     void updateCustomer(int customerId, Customer customer);
 
 }
