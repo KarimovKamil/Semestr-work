@@ -75,20 +75,22 @@ CREATE INDEX goods_index ON goods (goods_id);
 CREATE INDEX operation_index ON operation (operation_id);
 
 
-CREATE OR REPLACE FUNCTION add_operation
-(cid INT, gtype VARCHAR(50), gdesc VARCHAR(100), gprice INT, treturn INT)
-RETURNS void AS '
-  BEGIN
-  INSERT INTO goods (goods_type, pawnshop_price, description)
-                    VALUES (gtype, gprice, gdesc)
-                    RETURNING goods_id INTO gid;
-  INSERT INTO operation (goods_id, customer_id, pledge_date, time_of_return,
-                    return_amount) VALUES ( gid, cid, now(), treturn,
-                    gprice*1.1);
+CREATE OR REPLACE FUNCTION add_operation (cid integer, gtype character varying, gdesc character varying, gprice integer, treturn integer) RETURNS void
+LANGUAGE plpgsql
+AS $$
+DECLARE
+gid INT;
+BEGIN
+INSERT INTO goods (goods_type, pawnshop_price, description)
+VALUES (gtype, gprice, gdesc)
+RETURNING goods_id INTO gid;
+INSERT INTO operation (goods_id, customer_id, pledge_date, time_of_return,
+return_amount) VALUES ( gid, cid, now(), treturn,
+gprice*1.1);
 
-  END;
-'
-LANGUAGE plpgsql;
+END;
+$$
+
 
 
 CREATE OR REPLACE FUNCTION add_property
