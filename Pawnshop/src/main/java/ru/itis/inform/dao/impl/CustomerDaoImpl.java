@@ -22,31 +22,31 @@ public class CustomerDaoImpl implements CustomerDao {
                     "middle_name, date_of_birth, phone_number) VALUES (:passport, " +
                     ":lastName, :firstName, :middleName, :dateOfBirth, :phoneNumber) " +
                     "RETURNING customer_id;";
+
     private static final String DELETE_CUSTOMER_SQL =
             "DELETE FROM customer WHERE customer_id = :customerId;";
+
     private static final String GET_CUSTOMER_BY_ID_SQL =
             "SELECT * FROM customer WHERE customer_id = :customerId;";
+
     private static final String GET_ALL_CUSTOMERS_SQL =
             "SELECT * FROM customer ORDER BY(customer_id);";
+
     private static final String UPDATE_CUSTOMER_SQL =
             "UPDATE customer SET (passport, last_name, first_name, middle_name, date_of_birth, phone_number) " +
                     "= (:passport, :lastName, :firstName, :middleName, :dateOfBirth, :phoneNumber) " +
                     "WHERE customer_id = :customerId";
 
     private RowMapper<Customer> customerMapper() {
-        return (resultSet, i) -> {
-            Customer customer = new Customer.Builder()
-                    .customerId(resultSet.getInt("customer_id"))
-                    .passport(resultSet.getString("passport"))
-                    .lastName(resultSet.getString("last_name"))
-                    .firstName(resultSet.getString("first_name"))
-                    .middleName(resultSet.getString("middle_name"))
-                    .dateOfBirth(resultSet.getDate("date_of_birth"))
-                    .phoneNumber(resultSet.getString("phone_number"))
-                    .build();
-
-            return customer;
-        };
+        return (resultSet, i) -> new Customer.Builder()
+                .customerId(resultSet.getInt("customer_id"))
+                .passport(resultSet.getString("passport"))
+                .lastName(resultSet.getString("last_name"))
+                .firstName(resultSet.getString("first_name"))
+                .middleName(resultSet.getString("middle_name"))
+                .dateOfBirth(resultSet.getDate("date_of_birth"))
+                .phoneNumber(resultSet.getString("phone_number"))
+                .build();
     }
 
     @Override
@@ -58,7 +58,6 @@ public class CustomerDaoImpl implements CustomerDao {
         params.put("middleName", customer.getMiddleName());
         params.put("dateOfBirth", customer.getDateOfBirth());
         params.put("phoneNumber", customer.getPhoneNumber());
-
         return namedParameterJdbcTemplate.queryForObject(CREATE_CUSTOMER_SQL, params, int.class);
     }
 
@@ -66,7 +65,6 @@ public class CustomerDaoImpl implements CustomerDao {
     public void deleteCustomer(int customerId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("customerId", customerId);
-
         namedParameterJdbcTemplate.update(DELETE_CUSTOMER_SQL, params);
     }
 
@@ -74,7 +72,6 @@ public class CustomerDaoImpl implements CustomerDao {
     public Customer getCustomer(int customerId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("customerId", customerId);
-
         return namedParameterJdbcTemplate.queryForObject(GET_CUSTOMER_BY_ID_SQL, params, customerMapper());
     }
 

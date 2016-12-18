@@ -3,14 +3,13 @@ package ru.itis.inform.validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.itis.inform.exceptions.IncorrectDataException;
-import ru.itis.inform.models.Goods;
-import ru.itis.inform.models.NewOperation;
-import ru.itis.inform.models.Operation;
-import ru.itis.inform.models.TheProperty;
+import ru.itis.inform.models.*;
 import ru.itis.inform.validation.dao.CustomerValidator;
 import ru.itis.inform.validation.dao.GoodsValidator;
 import ru.itis.inform.validation.dao.OperationValidator;
 import ru.itis.inform.validation.dao.ThePropertyValidator;
+
+import java.sql.Date;
 
 /**
  * Created by Kamil Karimov on 14.12.2016.
@@ -28,6 +27,14 @@ public class VerificationFactory {
     ThePropertyValidator thePropertyValidator;
     @Autowired
     DataValidation dataValidation;
+
+    public void verifyCustomer(Customer customer) {
+        verifyPhone(customer.getPhoneNumber());
+        verifyPassport(customer.getPassport());
+        verifyPhoneUnique(customer.getPhoneNumber());
+        verifyPassportUnique(customer.getPassport());
+        verifyDateOfBirth(customer.getDateOfBirth());
+    }
 
     public void verifyCustomerExistence(int id) {
         if (!customerValidator.verifyCustomer(id)) {
@@ -135,4 +142,11 @@ public class VerificationFactory {
         }
     }
 
+    public void verifyDateOfBirth(Date date) {
+        Date date1 = new Date(20, 1, 1);
+        Date date2 = new Date(100, 1, 1);
+        if (date.before(date1) || date.after(date2)) {
+            throw new IncorrectDataException("Incorrect date of birth");
+        }
+    }
 }

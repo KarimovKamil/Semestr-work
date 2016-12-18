@@ -3,6 +3,7 @@ package ru.itis.inform.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.inform.dao.interfaces.CustomerDao;
+import ru.itis.inform.exceptions.IncorrectDataException;
 import ru.itis.inform.models.Customer;
 import ru.itis.inform.services.interfaces.CustomerService;
 import ru.itis.inform.validation.VerificationFactory;
@@ -19,11 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void saveCustomer(Customer customer) {
-        verificationFactory.verifyPhone(customer.getPhoneNumber());
-        verificationFactory.verifyPassport(customer.getPassport());
-        verificationFactory.verifyPhoneUnique(customer.getPhoneNumber());
-        verificationFactory.verifyPassportUnique(customer.getPassport());
-
+        verificationFactory.verifyCustomer(customer);
         customerDao.saveCustomer(customer);
     }
 
@@ -51,6 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(int customerId, Customer customer) {
         verificationFactory.verifyCustomerExistence(customerId);
+        verificationFactory.verifyDateOfBirth(customer.getDateOfBirth());
         Customer customerFromDB = customerDao.getCustomer(customerId);
         if (customer.getPassport() != null && !customer.getPassport().equals("")
                 && !customer.getPassport().equals(customerFromDB.getPassport())) {

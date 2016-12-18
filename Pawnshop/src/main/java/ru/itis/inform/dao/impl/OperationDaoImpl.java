@@ -20,31 +20,31 @@ public class OperationDaoImpl implements OperationDao {
 
     private static final String CREATE_OPERATION_SQL =
             "SELECT add_operation(:customerId, :goodsType, :goodsDescription, :price, :timeOfReturn);";
+
     private static final String DELETE_OPERATION_SQL =
             "DELETE FROM operation WHERE operation_id = :operationId;";
+
     private static final String GET_OPERATION_BY_ID_SQL =
             "SELECT * FROM operation WHERE operation_id = :operationId;";
+
     private static final String GET_ALL_OPERATIONS_SQL =
             "SELECT * FROM operation ORDER BY(operation_id);";
+
     private static final String UPDATE_OPERATION_SQL =
             "UPDATE operation SET (customer_id, time_of_return, status, return_amount) = " +
                     "(:customerId, :timeOfReturn, :status, :returnAmount) " +
                     "WHERE operation_id = :operationId;";
 
     private RowMapper<Operation> operationMapper() {
-        return (resultSet, i) -> {
-            Operation operation = new Operation.Builder()
-                    .operationId(resultSet.getInt("operation_id"))
-                    .goodsId(resultSet.getInt("goods_id"))
-                    .customerId(resultSet.getInt("customer_id"))
-                    .pledgeDate(resultSet.getDate("pledge_date"))
-                    .timeOfReturn(resultSet.getInt("time_of_return"))
-                    .status(resultSet.getString("status"))
-                    .returnAmount(resultSet.getInt("return_amount"))
-                    .build();
-
-            return operation;
-        };
+        return (resultSet, i) -> new Operation.Builder()
+                .operationId(resultSet.getInt("operation_id"))
+                .goodsId(resultSet.getInt("goods_id"))
+                .customerId(resultSet.getInt("customer_id"))
+                .pledgeDate(resultSet.getDate("pledge_date"))
+                .timeOfReturn(resultSet.getInt("time_of_return"))
+                .status(resultSet.getString("status"))
+                .returnAmount(resultSet.getInt("return_amount"))
+                .build();
     }
 
     @Override
@@ -55,7 +55,6 @@ public class OperationDaoImpl implements OperationDao {
         params.put("goodsDescription", newOperation.getGoodsDescription());
         params.put("price", newOperation.getPrice());
         params.put("timeOfReturn", newOperation.getTimeOfReturn());
-
         namedParameterJdbcTemplate.queryForObject(CREATE_OPERATION_SQL, params, String.class);
     }
 
@@ -63,7 +62,6 @@ public class OperationDaoImpl implements OperationDao {
     public void deleteOperation(int operationId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("operationId", operationId);
-
         namedParameterJdbcTemplate.update(DELETE_OPERATION_SQL, params);
     }
 
@@ -71,7 +69,6 @@ public class OperationDaoImpl implements OperationDao {
     public Operation getOperation(int operationId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("operationId", operationId);
-
         return namedParameterJdbcTemplate.queryForObject(GET_OPERATION_BY_ID_SQL, params, operationMapper());
     }
 
@@ -88,7 +85,6 @@ public class OperationDaoImpl implements OperationDao {
         params.put("status", operation.getStatus());
         params.put("returnAmount", operation.getReturnAmount());
         params.put("operationId", operationId);
-
         namedParameterJdbcTemplate.update(UPDATE_OPERATION_SQL, params);
     }
 }

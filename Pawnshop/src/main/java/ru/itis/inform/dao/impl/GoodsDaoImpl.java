@@ -21,28 +21,28 @@ public class GoodsDaoImpl implements GoodsDao {
             "INSERT INTO goods (goods_type, pawnshop_price, description) " +
                     "VALUES (:goodsType, :pawnshopPrice, :description) " +
                     "RETURNING goods_id;";
+
     private static final String DELETE_GOODS_SQL =
             "DELETE FROM goods WHERE goods_id = :goodsId;";
+
     private static final String GET_GOODS_BY_ID_SQL =
             "SELECT * FROM goods WHERE goods_id = :goodsId;";
+
     private static final String GET_ALL_GOODS_SQL =
             "SELECT * FROM goods ORDER BY(goods_id);";
+
     private static final String UPDATE_GOODS_SQL =
             "UPDATE goods SET (goods_type, pawnshop_price, description) = " +
                     "(:goodsType, :pawnshopPrice, :description) " +
                     "WHERE goods_id = :goodsId;";
 
     private RowMapper<Goods> goodsMapper() {
-        return (resultSet, i) -> {
-            Goods goods = new Goods.Builder()
-                    .goodsId(resultSet.getInt("goods_id"))
-                    .goodsType(resultSet.getString("goods_type"))
-                    .goodsPrice(resultSet.getInt("pawnshop_price"))
-                    .description(resultSet.getString("description"))
-                    .build();
-
-            return goods;
-        };
+        return (resultSet, i) -> new Goods.Builder()
+                .goodsId(resultSet.getInt("goods_id"))
+                .goodsType(resultSet.getString("goods_type"))
+                .goodsPrice(resultSet.getInt("pawnshop_price"))
+                .description(resultSet.getString("description"))
+                .build();
     }
 
     @Override
@@ -51,7 +51,6 @@ public class GoodsDaoImpl implements GoodsDao {
         params.put("goodsType", goods.getGoodsType());
         params.put("pawnshopPrice", goods.getGoodsPrice());
         params.put("description", goods.getDescription());
-
         return namedParameterJdbcTemplate.queryForObject(CREATE_GOODS_SQL, params, int.class);
     }
 
@@ -81,7 +80,6 @@ public class GoodsDaoImpl implements GoodsDao {
         params.put("pawnshopPrice", goods.getGoodsPrice());
         params.put("description", goods.getDescription());
         params.put("goodsId", goodsId);
-
         namedParameterJdbcTemplate.update(UPDATE_GOODS_SQL, params);
     }
 }
