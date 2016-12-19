@@ -9,7 +9,7 @@ public class PropertiesProvider {
     private InputStream file;
     private Properties property = new Properties();
 
-    public Properties getProperties () {
+    public Properties getProperties() {
         try {
             file = getClass().getResourceAsStream("/properties/config.properties");
             property.load(file);

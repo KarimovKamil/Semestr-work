@@ -21,7 +21,6 @@ public class GoodsController {
     GoodsService goodsService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getAllGoods() {
         ModelAndView modelAndView = new ModelAndView("goods/goods");
         Map<String, List<Goods>> params = new HashMap<>();
@@ -31,7 +30,6 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getGood(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("goods/good");
         Map<String, Goods> params = new HashMap<>();
@@ -41,14 +39,12 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    @ResponseBody
     public ModelAndView deleteGoods(@PathVariable("id") int id) {
         goodsService.deleteGoods(id);
         return new ModelAndView("redirect:/goods/all");
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView addGoods() {
         return new ModelAndView("goods/addGoods");
     }
@@ -66,7 +62,6 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView updateGoods(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("goods/updateGoods");
         Map<String, Goods> params = new HashMap<>();

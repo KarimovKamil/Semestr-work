@@ -23,6 +23,7 @@ public class DaoConfig {
         String password = properties.getProperty("password");
         String url = properties.getProperty("url");
         String driver = properties.getProperty("driver");
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(url);
         dataSource.setUsername(username);

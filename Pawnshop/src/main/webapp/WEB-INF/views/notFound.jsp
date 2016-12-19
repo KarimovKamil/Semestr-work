@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Manymuch
-  Date: 15.12.2016
-  Time: 12:51
+  Date: 19.12.2016
+  Time: 11:06
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Error</title>
+    <title>404</title>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -28,6 +28,6 @@
         </ul>
     </div>
 </nav>
-    <H1> 400 ${message}</H1>
+<H1> 404 Page not found</H1>
 </body>
 </html>

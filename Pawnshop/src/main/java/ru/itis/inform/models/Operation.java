@@ -79,14 +79,17 @@ public class Operation {
             customerId = arg;
             return this;
         }
+
         public Builder pledgeDate(Date arg) {
             pledgeDate = arg;
             return this;
         }
+
         public Builder timeOfReturn(int arg) {
             timeOfReturn = arg;
             return this;
         }
+
         public Builder status(String arg) {
             status = arg;
             return this;

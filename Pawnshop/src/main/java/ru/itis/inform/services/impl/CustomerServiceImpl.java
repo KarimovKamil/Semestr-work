@@ -3,7 +3,6 @@ package ru.itis.inform.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.inform.dao.interfaces.CustomerDao;
-import ru.itis.inform.exceptions.IncorrectDataException;
 import ru.itis.inform.models.Customer;
 import ru.itis.inform.services.interfaces.CustomerService;
 import ru.itis.inform.validation.VerificationFactory;

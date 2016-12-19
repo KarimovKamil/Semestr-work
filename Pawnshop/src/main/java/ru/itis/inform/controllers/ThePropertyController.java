@@ -22,7 +22,6 @@ public class ThePropertyController {
     ThePropertyService thePropertyService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getAllProperties() {
         ModelAndView modelAndView = new ModelAndView("property/properties");
         Map<String, List<TheProperty>> params = new HashMap<>();
@@ -32,7 +31,6 @@ public class ThePropertyController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getGood(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("property/property");
         Map<String, TheProperty> params = new HashMap<>();
@@ -42,14 +40,12 @@ public class ThePropertyController {
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    @ResponseBody
     public ModelAndView deleteGoods(@PathVariable("id") int id) {
         thePropertyService.deleteProperty(id);
         return new ModelAndView("redirect:/property/all");
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView addProperty() {
         return new ModelAndView("property/addProperty");
     }
@@ -66,7 +62,6 @@ public class ThePropertyController {
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView updateProperty(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("property/updateProperty");
         Map<String, TheProperty> params = new HashMap<>();

@@ -23,7 +23,6 @@ public class OperationController {
     OperationService operationService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getAllOperations() {
         ModelAndView modelAndView = new ModelAndView("operation/operations");
         Map<String, List<Operation>> params = new HashMap<>();
@@ -33,7 +32,6 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView getCustomer(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("operation/operation");
         Map<String, Operation> params = new HashMap<>();
@@ -43,14 +41,12 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    @ResponseBody
     public ModelAndView deleteOperation(@PathVariable("id") int id) {
         operationService.deleteOperation(id);
         return new ModelAndView("redirect:/operation/all");
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView addOperation() {
         return new ModelAndView("operation/addOperation");
     }
@@ -72,7 +68,6 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView updateOperation(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView("operation/updateOperation");
         Map<String, Operation> params = new HashMap<>();

@@ -40,7 +40,6 @@
             Passport: ${customer.passport}<br>
             Date of birth: ${customer.dateOfBirth}<br>
         </h3>
-        <%--<div class="container">--%>
         <button class="btn btn-primary" formaction="/customer/${customer.customerId}/update"
                 formmethod="get">
             Update

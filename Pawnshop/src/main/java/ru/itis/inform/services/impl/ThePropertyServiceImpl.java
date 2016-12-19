@@ -3,7 +3,6 @@ package ru.itis.inform.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.inform.dao.interfaces.ThePropertyDao;
-import ru.itis.inform.exceptions.IncorrectDataException;
 import ru.itis.inform.models.TheProperty;
 import ru.itis.inform.services.interfaces.ThePropertyService;
 import ru.itis.inform.validation.VerificationFactory;

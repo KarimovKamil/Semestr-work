@@ -75,7 +75,9 @@ CREATE INDEX goods_index ON goods (goods_id);
 CREATE INDEX operation_index ON operation (operation_id);
 
 
-CREATE OR REPLACE FUNCTION add_operation (cid integer, gtype character varying, gdesc character varying, gprice integer, treturn integer) RETURNS void
+CREATE OR REPLACE FUNCTION add_operation
+(cid integer, gtype character varying, gdesc character varying, gprice integer, treturn integer)
+RETURNS void
 LANGUAGE plpgsql
 AS $$
 DECLARE
