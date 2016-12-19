@@ -51,17 +51,17 @@
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone number:</label>
-                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"
+                <input type="text" pattern="[1-9][0-9]{10}" class="form-control" required name="phoneNumber" id="phoneNumber"
                        placeholder="Enter phone number">
             </div>
             <div class="form-group">
                 <label for="passport">Passport:</label>
-                <input type="text" class="form-control" name="passport" id="passport"
+                <input type="text" pattern="[0-9]{10}" class="form-control" required name="passport" id="passport"
                        placeholder="Enter passport">
             </div>
             <div class="form-group">
                 <label for="dateOfBirth">Date of birth:</label>
-                <input type="date" class="form-control" name="dateOfBirth" value="1990-01-01" id="dateOfBirth">
+                <input type="date" class="form-control" required name="dateOfBirth" value="1990-01-01" id="dateOfBirth">
             </div>
         </div>
         <br>

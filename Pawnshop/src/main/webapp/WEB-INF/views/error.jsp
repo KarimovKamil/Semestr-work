@@ -28,6 +28,8 @@
         </ul>
     </div>
 </nav>
+<center>
     <H1> 400 ${message}</H1>
+</center>
 </body>
 </html>

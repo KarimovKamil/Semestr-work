@@ -36,12 +36,12 @@
         <div class="input-group input-group-lg">
             <div class="form-group">
                 <label for="goodsType">Goods type:</label>
-                <input type="text" class="form-control" id="goodsType" name="goodsType"
+                <input type="text" class="form-control" required id="goodsType" name="goodsType"
                        placeholder="Enter goods type">
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" class="form-control" value="0" name="price" id="price"
+                <input type="number" class="form-control" required value="0" name="price" id="price"
                        placeholder="Enter price">
             </div>
             <div class="form-group">

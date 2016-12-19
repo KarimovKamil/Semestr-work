@@ -28,6 +28,8 @@
         </ul>
     </div>
 </nav>
-<H1> 404 Page not found</H1>
+<center>
+    <H1> 404 Page not found</H1>
+</center>
 </body>
 </html>

@@ -34,19 +34,19 @@
         <div class="input-group input-group-lg">
             <div class="form-group">
                 <label for="customerId">Customer id:</label>
-                <input type="number" class="form-control" id="customerId" name="customerId" value="${operation.customerId}">
+                <input type="number" class="form-control" required id="customerId" name="customerId" value="${operation.customerId}">
             </div>
             <div class="form-group">
                 <label for="timeOfReturn">Time of return:</label>
-                <input type="number" class="form-control" name="timeOfReturn" value="${operation.timeOfReturn}" id="timeOfReturn">
+                <input type="number" class="form-control" required name="timeOfReturn" value="${operation.timeOfReturn}" id="timeOfReturn">
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
-                <input type="text" class="form-control" name="status" value="${operation.status}" id="status">
+                <input type="text" class="form-control" required name="status" value="${operation.status}" id="status">
             </div>
             <div class="form-group">
                 <label for="returnAmount">Return amount:</label>
-                <input type="number" class="form-control" name="returnAmount" value="${operation.returnAmount}" id="returnAmount">
+                <input type="number" class="form-control" required name="returnAmount" value="${operation.returnAmount}" id="returnAmount">
             </div>
         </div>
         <br>

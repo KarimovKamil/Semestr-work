@@ -36,7 +36,7 @@
         <div class="input-group input-group-lg">
             <div class="form-group">
                 <label for="goodsId">Goods id:</label>
-                <input type="text" class="form-control" id="goodsId" name="goodsId"
+                <input type="number" class="form-control" required id="goodsId" value="0" name="goodsId"
                        placeholder="Enter goods id">
             </div>
             <div class="form-group">
@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label for="dwellingSpace">Dwelling space:</label>
-                <input type="number" class="form-control" value="0" name="dwellingSpace" id="dwellingSpace"
+                <input type="number" class="form-control" required value="0" name="dwellingSpace" id="dwellingSpace"
                        placeholder="Enter dwelling space">
             </div>
         </div>

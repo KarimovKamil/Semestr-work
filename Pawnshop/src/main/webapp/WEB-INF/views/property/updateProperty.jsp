@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="dwellingSpace">Dwelling space:</label>
-                <input type="number" class="form-control" name="dwellingSpace" value="${property.dwellingSpace}" id="dwellingSpace">
+                <input type="number" class="form-control" required name="dwellingSpace" value="${property.dwellingSpace}" id="dwellingSpace">
             </div>
         </div>
         <br>

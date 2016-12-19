@@ -34,7 +34,7 @@
         <div class="input-group input-group-lg">
             <div class="form-group">
                 <label for="goodsType">Goods type:</label>
-                <input type="text" class="form-control" id="goodsType" name="goodsType" value="${goods.goodsType}">
+                <input type="text" class="form-control" required id="goodsType" name="goodsType" value="${goods.goodsType}">
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" class="form-control" name="price" value="${goods.goodsPrice}" id="price">
+                <input type="number" class="form-control" required name="price" value="${goods.goodsPrice}" id="price">
             </div>
         </div>
         <br>

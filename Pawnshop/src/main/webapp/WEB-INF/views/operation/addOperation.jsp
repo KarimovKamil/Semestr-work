@@ -36,12 +36,12 @@
         <div class="input-group input-group-lg">
             <div class="form-group">
                 <label for="customerId">Customer id:</label>
-                <input type="number" class="form-control" value="0" id="customerId" name="customerId"
+                <input type="number" class="form-control" required value="0" id="customerId" name="customerId"
                        placeholder="Enter customer id">
             </div>
             <div class="form-group">
                 <label for="goodsType">Goods type:</label>
-                <input type="text" class="form-control" name="goodsType" id="goodsType"
+                <input type="text" class="form-control" required name="goodsType" id="goodsType"
                        placeholder="Enter goods type">
             </div>
             <div class="form-group">
@@ -51,12 +51,12 @@
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" class="form-control" value="0" name="price" id="price"
+                <input type="number" class="form-control" required value="0" name="price" id="price"
                        placeholder="Enter price of goods">
             </div>
             <div class="form-group">
                 <label for="timeOfReturn">Time of return:</label>
-                <input type="number" class="form-control" value="10" name="timeOfReturn" id="timeOfReturn"
+                <input type="number" class="form-control" required value="10" name="timeOfReturn" id="timeOfReturn"
                        placeholder="Enter time of return">
             </div>
         </div>
