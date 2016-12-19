@@ -1,6 +1,7 @@
 package ru.itis.inform.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.inform.models.Goods;
@@ -13,7 +14,10 @@ import java.util.Map;
 /**
  * Created by Kamil Karimov on 14.12.2016.
  */
-@org.springframework.stereotype.Controller
+/**
+ * Принимаются запросы связанные с goods и вызываются соответствующие методы в сервисе
+ */
+@Controller
 @RequestMapping("/goods")
 public class GoodsController {
 

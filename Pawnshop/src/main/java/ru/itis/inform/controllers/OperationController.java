@@ -15,6 +15,10 @@ import java.util.Map;
 /**
  * Created by Kamil Karimov on 17.12.2016.
  */
+
+/**
+ * Принимаются запросы связанные с operation и вызываются соответствующие методы в сервисе
+ */
 @Controller
 @RequestMapping("/operation")
 public class OperationController {

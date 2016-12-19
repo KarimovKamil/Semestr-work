@@ -16,6 +16,10 @@ import java.util.Map;
 /**
  * Created by Kamil Karimov on 18.11.2016.
  */
+
+/**
+ * Отлавливаются ошибки и выводится соответствующая страница
+ */
 @ControllerAdvice(assignableTypes = {
         CustomerController.class,
         GoodsController.class,

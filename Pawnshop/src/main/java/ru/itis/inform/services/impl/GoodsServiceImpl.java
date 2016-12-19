@@ -12,6 +12,10 @@ import java.util.List;
 /**
  * Created by Kamil Karimov on 14.12.2016.
  */
+
+/**
+ * Проверка данных на корректность и вызов goodsDao
+ */
 @Service
 public class GoodsServiceImpl implements GoodsService {
 

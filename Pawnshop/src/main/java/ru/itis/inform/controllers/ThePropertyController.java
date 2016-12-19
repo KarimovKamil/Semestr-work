@@ -14,6 +14,10 @@ import java.util.Map;
 /**
  * Created by Kamil Karimov on 17.12.2016.
  */
+
+/**
+ * Принимаются запросы связанные с property и вызываются соответствующие методы в сервисе
+ */
 @Controller
 @RequestMapping("/property")
 public class ThePropertyController {

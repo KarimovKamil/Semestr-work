@@ -12,6 +12,10 @@ import java.util.List;
 /**
  * Created by Kamil Karimov on 17.12.2016.
  */
+
+/**
+ * Проверка данных на корректность и вызов thePropertyDao
+ */
 @Service
 public class ThePropertyServiceImpl implements ThePropertyService {
 

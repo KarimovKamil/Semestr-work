@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Работа с таблицой goods
+ */
 @Repository
 public class GoodsDaoImpl implements GoodsDao {
 

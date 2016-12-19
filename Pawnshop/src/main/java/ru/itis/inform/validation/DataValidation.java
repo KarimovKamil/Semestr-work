@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class DataValidation {
 
     public boolean verifyPhone(String phone) {
-        Pattern pattern = Pattern.compile("[0-9]{11}");
+        Pattern pattern = Pattern.compile("[1-9][0-9]{10}");
         Matcher matcher = pattern.matcher(phone);
         return phone != null && matcher.matches();
     }

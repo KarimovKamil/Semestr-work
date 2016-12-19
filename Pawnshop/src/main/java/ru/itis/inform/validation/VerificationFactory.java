@@ -14,6 +14,10 @@ import java.sql.Date;
 /**
  * Created by Kamil Karimov on 14.12.2016.
  */
+
+/**
+ * Проверка данных на коректность
+ */
 @Component
 public class VerificationFactory {
 

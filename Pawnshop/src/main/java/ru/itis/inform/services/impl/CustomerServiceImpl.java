@@ -9,6 +9,9 @@ import ru.itis.inform.validation.VerificationFactory;
 
 import java.util.List;
 
+/**
+ * Проверка данных на корректность и вызов customerDao
+ */
 @Service
 public class CustomerServiceImpl implements CustomerService {
 

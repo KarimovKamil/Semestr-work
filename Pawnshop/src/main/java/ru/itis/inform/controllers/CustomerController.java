@@ -18,6 +18,10 @@ import java.util.Map;
 /**
  * Created by Kamil Karimov on 14.12.2016.
  */
+
+/**
+ * Принимаются запросы связанные с customer и вызываются соответствующие методы в сервисе
+ */
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {

@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Работа с таблицой customer
+ */
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
